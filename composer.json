@@ -1,0 +1,37 @@
+{
+  "name": "khvt/admin-theme-manager",
+  "description": "Oxid eShop Admin Theme Manager for Oxid eShop V6",
+  "type": "oxideshop-module",
+  "authors": [
+    {
+      "name": "Kristian Hempel (https://github.com/KristianH/)",
+    },
+    {
+      "name": "Marat (https://github.com/vanilla-thunder)",
+    }
+  ],
+  "keywords": [
+    "oxid",
+    "modules",
+    "eShop",
+    "admin",
+    "theme",
+    "management"
+  ],
+  "homepage": "https://github.com/KristianH/admin-theme-manager/",
+  "license": [],
+  "extra": {
+    "oxideshop": {
+      "source-directory": "/src",
+      "target-directory": "khvt/admin-theme-manager"
+    }
+  },
+  "require": {
+    "oxid-esales/oxideshop-metapackage-ce": "^6.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "KHVT\\ATM\\": "../../../source/modules/khvt/admin-theme-manager"
+    }
+  }
+}

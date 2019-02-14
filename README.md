@@ -1,5 +1,5 @@
 # admin-theme-manager
-Oxid eShop Admin Theme Manager für Oxid eShop V6
+Oxid eShop Admin Theme Manager for Oxid eShop V6
 
 This repository contains a Oxid Eshop module to manage admin themes.  
 Based on the shop theme management.
