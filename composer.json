@@ -19,7 +19,11 @@
     "management"
   ],
   "homepage": "https://github.com/KristianH/admin-theme-manager/",
-  "license": [],
+  "license": "GPL-3.0-or-later",
+  "support": {
+    "issues": "https://github.com/KristianH/admin-theme-manager/issues",
+    "source": "https://github.com/KristianH/admin-theme-manager/",
+  },
   "extra": {
     "oxideshop": {
       "source-directory": "/src",
