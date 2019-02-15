@@ -21,12 +21,21 @@ class Config extends Config_parent
      */
     public function getDir($file, $dir, $admin, $lang = null, $shop = null, $theme = null, $absolute = true, $ignoreCust = false)
     {
+        if ($admin) {
+            return $this->getAdminThemeManagerDir($file, $dir, $admin, $lang, $shop, $theme, $absolute, $ignoreCust);
+        }
+
+        return parent::getDir($file, $dir, $admin, $lang, $shop, $theme, $absolute, $ignoreCust);
+    }
+
+    public function getAdminThemeManagerDir($file, $dir, $admin, $lang = null, $shop = null, $theme = null, $absolute = true, $ignoreCust = false)
+    {
         if (is_null($theme)) {
             $theme = $this->getConfigParam('sTheme');
         }
 
         if ($admin) {
-            $theme = 'admin';
+            $theme = $this->getAdminThemeManagerSelectedTheme();
         }
 
         if ($dir != $this->_sTemplateDir) {
@@ -109,5 +118,10 @@ class Config extends Config_parent
         Registry::getUtils()->toStaticCache($cacheKey, $return);
 
         return $return;
+    }
+
+    public function getAdminThemeManagerSelectedTheme()
+    {
+        return 'admin';
     }
 }
