@@ -20,7 +20,7 @@ $aModule = array(
     'url'            => 'https://github.com/KristianH/admin-theme-manager/',
     'email'          => '',
     'extend'         => array(
-//        \OxidEsales\Eshop\Core\Config::class  => stdClass::class,
+        \OxidEsales\Eshop\Core\Config::class  => \KHVT\AdminThemeManager\Core\Config::class,
     ),
     'controllers'   => array(
 //        'controllerMapName'    => stdClass::class,

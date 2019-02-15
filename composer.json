@@ -4,10 +4,10 @@
   "type": "oxideshop-module",
   "authors": [
     {
-      "name": "Kristian Hempel (https://github.com/KristianH/)",
+      "name": "Kristian Hempel (https://github.com/KristianH/)"
     },
     {
-      "name": "Marat (https://github.com/vanilla-thunder)",
+      "name": "Marat (https://github.com/vanilla-thunder)"
     }
   ],
   "keywords": [
@@ -22,12 +22,12 @@
   "license": "GPL-3.0-or-later",
   "support": {
     "issues": "https://github.com/KristianH/admin-theme-manager/issues",
-    "source": "https://github.com/KristianH/admin-theme-manager/",
+    "source": "https://github.com/KristianH/admin-theme-manager/"
   },
   "extra": {
     "oxideshop": {
       "source-directory": "/src",
-      "target-directory": "khvt/admin-theme-manager"
+      "target-directory": "khvt/AdminThemeManager"
     }
   },
   "require": {
@@ -35,7 +35,7 @@
   },
   "autoload": {
     "psr-4": {
-      "KHVT\\ATM\\": "../../../source/modules/khvt/admin-theme-manager"
+      "KHVT\\AdminThemeManager\\": "../../../source/modules/khvt/AdminThemeManager"
     }
   }
 }
