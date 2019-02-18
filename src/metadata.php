@@ -15,13 +15,14 @@ $aModule = array(
         'en' => '',
     ),
     'thumbnail'      => 'picture.png',
-    'version'        => '0.0.1',
+    'version'        => '0.0.2',
     'author'         => 'https://github.com/KristianH & https://github.com/vanilla-thunder/',
     'url'            => 'https://github.com/KristianH/admin-theme-manager/',
     'email'          => '',
     'extend'         => array(
-        \OxidEsales\Eshop\Core\Config::class  => \KHVT\AdminThemeManager\Core\Config::class,
-        \OxidEsales\Eshop\Core\Language::class  => \KHVT\AdminThemeManager\Core\Language::class,
+        \OxidEsales\Eshop\Core\Config::class                                 => \KHVT\AdminThemeManager\Core\Config::class,
+        \OxidEsales\Eshop\Core\Language::class                               => \KHVT\AdminThemeManager\Core\Language::class,
+        \OxidEsales\Eshop\Application\Controller\Admin\NavigationTree::class => \KHVT\AdminThemeManager\Application\Controller\Admin\NavigationTree::class,
     ),
     'controllers'   => array(
 //        'controllerMapName'    => stdClass::class,
