@@ -21,6 +21,7 @@ $aModule = array(
     'email'          => '',
     'extend'         => array(
         \OxidEsales\Eshop\Core\Config::class  => \KHVT\AdminThemeManager\Core\Config::class,
+        \OxidEsales\Eshop\Core\Language::class  => \KHVT\AdminThemeManager\Core\Language::class,
     ),
     'controllers'   => array(
 //        'controllerMapName'    => stdClass::class,
