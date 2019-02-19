@@ -30,9 +30,11 @@ class Config extends Config_parent
 
     public function getAdminThemeManagerDir($file, $dir, $admin, $lang = null, $shop = null, $theme = null, $absolute = true, $ignoreCust = false)
     {
+        //<editor-fold desc="TODO: check if this part is necessary">
         if (is_null($theme)) {
             $theme = $this->getConfigParam('sTheme');
         }
+        //</editor-fold>
 
         if ($admin) {
             $theme = $this->getAdminThemeManagerSelectedTheme();
@@ -72,6 +74,7 @@ class Config extends Config_parent
 
         $return = $this->getEditionTemplate("{$theme}/{$dir}/{$file}");
 
+        //<editor-fold desc="TODO: check if this part is necessary">
         // Check for custom template
         $customTheme = $this->getConfigParam('sCustomTheme');
         if (!$return && !$admin && !$ignoreCust && $customTheme && $customTheme != $theme) {
@@ -87,6 +90,7 @@ class Config extends Config_parent
         if (!$return && !$admin) {
             $return = $this->getShopLevelDir($base, $absBase, $file, $dir, $admin, $lang, $shop, $theme, $absolute, $ignoreCust);
         }
+        //</editor-fold>
 
         //test theme language level ..
         $path = "$theme/$langAbbr/$dir/$file";
