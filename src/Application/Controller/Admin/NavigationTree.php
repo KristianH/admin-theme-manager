@@ -12,8 +12,7 @@ class NavigationTree extends NavigationTree_parent
      */
     protected function _getMenuFiles()
     {
-        $filesToLoad = parent::_getMenuFiles();
-
+        $filesToLoad = [];
         /** @var \KHVT\AdminThemeManager\Core\Config $config */
         $config     = $this->getConfig();
         $viewsPath  = $config->getViewsDir(true);
@@ -49,6 +48,9 @@ class NavigationTree extends NavigationTree_parent
                 }
             }
         }
+
+        $parentFilesToLoad = parent::_getMenuFiles();
+        $filesToLoad = array_merge($filesToLoad, $parentFilesToLoad);
 
         return $filesToLoad;
     }
