@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OX>
+    <OXMENU id="NAVIGATION_ESHOPADMIN">
+        <MAINMENU id="mxextensions">
+            <SUBMENU id="khvt_adminthememanager_application_controller_admin_base" cl="khvt_adminthememanager_application_controller_admin_base" list="khvt_adminthememanager_application_controller_admin_adminlist">
+                <TAB id="khvt_adminthememanager_application_controller_admin_main" cl="khvt_adminthememanager_application_controller_admin_main" />
+            </SUBMENU>
+        </MAINMENU>
+    </OXMENU>
+</OX>

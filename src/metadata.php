@@ -25,10 +25,14 @@ $aModule = array(
         \OxidEsales\Eshop\Application\Controller\Admin\NavigationTree::class => \KHVT\AdminThemeManager\Application\Controller\Admin\NavigationTree::class,
     ),
     'controllers'   => array(
-//        'controllerMapName'    => stdClass::class,
+        'khvt_adminthememanager_application_controller_admin_adminlist' => \KHVT\AdminThemeManager\Application\Controller\Admin\AdminList::class,
+        'khvt_adminthememanager_application_controller_admin_base'      => \KHVT\AdminThemeManager\Application\Controller\Admin\Base::class,
+        'khvt_adminthememanager_application_controller_admin_main'      => \KHVT\AdminThemeManager\Application\Controller\Admin\Main::class,
     ),
     'templates'      => array(
-//        'template.tpl' => 'pathtotemplate.tpl',
+        'khvt_adminthememanager_application_views_admin_tpl_adminlist.tpl' => 'khvt/AdminThemeManager/Application/views/admin/tpl/adminlist.tpl',
+        'khvt_adminthememanager_application_views_admin_tpl_base.tpl'      => 'khvt/AdminThemeManager/Application/views/admin/tpl/base.tpl',
+        'khvt_adminthememanager_application_views_admin_tpl_main.tpl'      => 'khvt/AdminThemeManager/Application/views/admin/tpl/main.tpl',
     ),
     'events'         => array(
 //        'onActivate' => stdClass::class . '::method',
