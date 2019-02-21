@@ -1,5 +1,8 @@
 <?php
-namespace KHVT\AdminThemeManager\Model;
+
+namespace KHVT\AdminThemeManager\Application\Model;
+
+use OxidEsales\Eshop\Core\Registry;
 
 /**
  * Class AdminTheme
@@ -8,6 +11,7 @@ namespace KHVT\AdminThemeManager\Model;
  */
 class AdminTheme extends \OxidEsales\Eshop\Core\Theme
 {
+    const oxAdminStandardTheme = 'admin';
 
     /**
      * Set theme as active
@@ -24,13 +28,15 @@ class AdminTheme extends \OxidEsales\Eshop\Core\Theme
         }
         $sParent = $this->getInfo('parentTheme');
         if ($sParent) {
-            $this->getConfig()->saveShopConfVar("str", 'sTheme', $sParent);
-            $this->getConfig()->saveShopConfVar("str", 'sCustomTheme', $this->getId());
+            $this->getConfig()->saveShopConfVar("str", 'sAdminTheme', $sParent);
+            $this->getConfig()->saveShopConfVar("str", 'sAdminCustomTheme', $this->getId());
         } else {
-            $this->getConfig()->saveShopConfVar("str", 'sTheme', $this->getId());
-            $this->getConfig()->saveShopConfVar("str", 'sCustomTheme', '');
+            $this->getConfig()->saveShopConfVar("str", 'sAdminTheme', $this->getId());
+            $this->getConfig()->saveShopConfVar("str", 'sAdminCustomTheme', '');
         }
-        $settingsHandler = oxNew(\OxidEsales\Eshop\Core\SettingsHandler::class);
+
+        /** @var \OxidEsales\Eshop\Core\SettingsHandler::class $settingsHandler */
+        $settingsHandler = Registry::get(\OxidEsales\Eshop\Core\SettingsHandler::class);
         $settingsHandler->setModuleType('theme')->run($this);
     }
 
@@ -44,15 +50,23 @@ class AdminTheme extends \OxidEsales\Eshop\Core\Theme
      */
     public function getActiveThemesList()
     {
-        $config = \OxidEsales\Eshop\Core\Registry::getConfig();
-
         $activeThemeList = [];
-        if ($this->isAdmin()) {
-            $activeThemeList[] = $config->getConfigParam('sTheme');
+        if (false == $this->isAdmin()) {
+            return $activeThemeList;
+        }
 
-            if ($customThemeId = $config->getConfigParam('sCustomTheme')) {
-                $activeThemeList[] = $customThemeId;
-            }
+        $adminTheme = $this->getConfig()->getConfigParam('sAdminTheme');
+        if ($adminTheme) {
+            $activeThemeList[] = $adminTheme;
+        }
+
+        $adminCustomTheme = $this->getConfig()->getConfigParam('sAdminCustomTheme');
+        if ($adminCustomTheme) {
+            $activeThemeList[] = $adminCustomTheme;
+        }
+
+        if (empty($activeThemeList)) {
+            $activeThemeList[] = self::oxAdminStandardTheme;
         }
 
         return $activeThemeList;
@@ -65,11 +79,86 @@ class AdminTheme extends \OxidEsales\Eshop\Core\Theme
      */
     public function getActiveThemeId()
     {
-        $sCustTheme = $this->getConfig()->getConfigParam('sCustomTheme');
-        if ($sCustTheme) {
-            return $sCustTheme;
+        $adminCustomTheme = $this->getConfig()->getConfigParam('sAdminCustomTheme');
+        if ($adminCustomTheme) {
+            return $adminCustomTheme;
         }
 
-        return $this->getConfig()->getConfigParam('sTheme');
+        $adminTheme = $this->getConfig()->getConfigParam('sAdminTheme');
+        if ($adminTheme) {
+            return $adminTheme;
+        }
+
+        return self::oxAdminStandardTheme;
+    }
+
+    /**
+     * Load theme info list
+     *
+     * @return array
+     */
+    public function getList()
+    {
+        $this->_aThemeList = [];
+        $sOutDir           = $this->getConfig()->getViewsDir();
+        foreach (glob($sOutDir."*", GLOB_ONLYDIR) as $sDir) {
+            /** @var self $adminTheme */
+            $adminTheme = oxNew(self::class);
+            $directoryName = basename($sDir);
+
+            if ($adminTheme->load($directoryName)) {
+                $this->_aThemeList[$sDir] = $adminTheme;
+            } elseif ($directoryName === self::oxAdminStandardTheme && $adminTheme->loadOxAdmin()) {
+                $this->_aThemeList[$sDir] = $adminTheme;
+            }
+        }
+
+        return $this->_aThemeList;
+    }
+
+    /**
+     * Load oxid standard admin theme info
+     *
+     * @return bool
+     */
+    public function loadOxAdmin()
+    {
+        $aTheme = [
+            'id'          => self::oxAdminStandardTheme,
+            'active'      => ($this->getActiveThemeId() == self::oxAdminStandardTheme),
+            'title'       => 'Oxid Standard Admin',
+            'description' => 'This is OXID`s official admin theme.',
+            'thumbnail'   => 'theme.jpg',
+            'version'     => '',
+            'author'      => '<a href="http://www.oxid-esales.com" title="OXID eSales AG">OXID eSales AG</a>',
+            'settings'    => array(),
+        ];
+
+        $this->_aTheme = $aTheme;
+
+        return true;
+    }
+
+    /**
+     * Load theme info
+     *
+     * @param string $sOXID theme id
+     *
+     * @return bool
+     */
+    public function load($sOXID)
+    {
+        $sFilePath = $this->getConfig()->getViewsDir() . $sOXID . "/adminTheme.php";
+        if (file_exists($sFilePath) && is_readable($sFilePath)) {
+            $aTheme = [];
+            include $sFilePath;
+            $this->_aTheme = $aTheme;
+            $this->_aTheme['id'] = $sOXID;
+            $this->_aTheme['active'] = ($this->getActiveThemeId() == $sOXID);
+
+            return true;
+        }
+
+        return false;
     }
 }

@@ -126,6 +126,6 @@ class Config extends Config_parent
 
     public function getAdminThemeManagerSelectedTheme()
     {
-        return 'moped';
+        return 'admin';
     }
 }
