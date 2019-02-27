@@ -1,6 +1,7 @@
 <?php
 namespace KHVT\AdminThemeManager\Core;
 
+use KHVT\AdminThemeManager\Application\Model\AdminTheme;
 use OxidEsales\Eshop\Core\Registry;
 
 class Config extends Config_parent
@@ -126,6 +127,9 @@ class Config extends Config_parent
 
     public function getAdminThemeManagerSelectedTheme()
     {
-        return 'admin';
+        /** @var AdminTheme $activeTheme */
+        $activeTheme = oxNew(AdminTheme::class);
+
+        return $activeTheme->getActiveThemeId();
     }
 }

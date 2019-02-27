@@ -1,45 +1,71 @@
 [{include file="headitem.tpl" title="GENERAL_ADMIN_TITLE"|oxmultilangassign box="box"}]
 
+[{oxscript add=$updateNaviScript priority=10}]
+
 <form name="transfer" id="transfer" action="[{$oViewConf->getSelfLink()}]" method="post">
     [{$oViewConf->getHiddenSid()}]
-    <input type="hidden" name="oxid" value="[{$oxid}]">
+    <input type="hidden" name="oxid" value="[{$currentAdminTheme->getInfo('id')}]">
     <input type="hidden" name="cl" value="[{$oViewConf->getActiveClassname()}]">
     <input type="hidden" name="editlanguage" value="[{$editlanguage}]">
 </form>
 
 [{block name="khvt_adminthememanager_application_controller_admin_main_form"}]
     <table cellspacing="10" width="98%">
+            [{if $activationMessage}]
+                <tr>
+                    <td colspan="2">
+                        <div class="messagebox">
+                            <p class="warning">[{oxmultilang ident=$activationMessage}]</p>
+                        </div>
+                    </td>
+                    <td></td>
+                </tr>
+            [{/if}]
         <tr>
             <td width="30%" valign="top">
-                <img src="[{$currentAdminTheme->getThumbnailUrl()}]" style="max-width: 100%;" alt="missing theme thumbnail">
+                <img src="[{$currentAdminTheme->getThumbnailUrl()}]" style="max-width: 100%;" alt="[{oxmultilang ident="KHVT_ATM_THEME_MISSING_THUMBNAIL"}]">
             </td>
             <td valign="top">
                 <h1>[{$currentAdminTheme->getInfo('title')}]</h1>
                 <p>[{$currentAdminTheme->getInfo('description')}]</p>
                 <hr>
                 <p style="color:#aaa;">
-                    <b>[{oxmultilang ident="THEME_AUTHOR"}]</b> [{$currentAdminTheme->getInfo('author')}]<br><br>
-                    [{oxmultilang ident="THEME_VERSION"}] [{$currentAdminTheme->getInfo('version')}]
+                    <b>[{oxmultilang ident="KHVT_ATM_THEME_AUTHOR"}]</b> [{$currentAdminTheme->getInfo('author')}]<br><br>
+                    [{oxmultilang ident="KHVT_ATM_THEME_VERSION"}] [{$currentAdminTheme->getInfo('version')}]
                 </p>
             </td>
             <td width="20%" valign="top">
-                [{if false == $currentAdminTheme->getInfo('active')}]
-                    [{assign var='activationError' value=$currentAdminTheme->checkForActivationErrors()}]
-                    [{if false == $activationError}]
-                        <form name="myedit" id="myedit" action="[{$oViewConf->getSelfLink()}]" method="post">
-                            <p>
-                                [{$oViewConf->getHiddenSid()}]
-                                <input type="hidden" name="cl" value="[{$oViewConf->getActiveClassName()}]">
-                                <input type="hidden" name="fnc" value="setAdminTheme">
-                                <input type="hidden" name="updatelist" value="1">
-                                <input type="hidden" name="oxid" value="[{$currentAdminTheme->getInfo('id')}]">
-                                <input type="submit" value="[{oxmultilang ident="THEME_ACTIVATE"}]">
-                            </p>
-                        </form>
-                    [{else}]
-                        <div class="error">[{oxmultilang ident=$activationError}]</div>
-                    [{/if}]
+                [{assign var='disabledActivateButton' value=''}]
+                [{if $currentAdminTheme->getInfo('active')}]
+                    [{assign var='disabledActivateButton' value=' disabled="disabled"'}]
                 [{/if}]
+
+                <form name="myedit" id="myedit" action="[{$oViewConf->getSelfLink()}]" method="post">
+                    <p>
+                        [{$oViewConf->getHiddenSid()}]
+                        <input type="hidden" name="cl" value="[{$oViewConf->getActiveClassName()}]">
+                        <input type="hidden" name="fnc" value="setAdminTheme">
+                        <input type="hidden" name="updatelist" value="1">
+                        <input type="hidden" name="oxid" value="[{$currentAdminTheme->getInfo('id')}]">
+                        <input type="submit" class="btn" value="[{oxmultilang ident="KHVT_ATM_THEME_ACTIVATE"}]"[{$disabledActivateButton}]>
+                        [{oxinputhelp ident="KHVT_ATM_THEME_ACTIVATE_HELP"}]
+                    </p>
+                </form>
+                [{assign var='activationError' value=$currentAdminTheme->checkForActivationErrors()}]
+                [{if $activationError}]
+                    <div class="error">[{oxmultilang ident=$activationError}]</div>
+                [{/if}]
+                <form name="myedit" id="myedit" action="[{$oViewConf->getSelfLink()}]" method="post">
+                    <p>
+                        [{$oViewConf->getHiddenSid()}]
+                        <input type="hidden" name="cl" value="[{$oViewConf->getActiveClassName()}]">
+                        <input type="hidden" name="fnc" value="resetCache">
+                        <input type="hidden" name="updatelist" value="1">
+                        <input type="hidden" name="oxid" value="[{$currentAdminTheme->getInfo('id')}]">
+                        <input type="submit" class="btn" value="[{oxmultilang ident="KHVT_ATM_THEME_RESET_CACHE"}]">
+                        [{oxinputhelp ident="KHVT_ATM_THEME_RESET_CACHE_HELP"}]
+                    </p>
+                </form>
             </td>
         </tr>
     </table>

@@ -61,7 +61,7 @@ window.onload = function ()
             <tr id="row.[{counter}]">
                 [{block name="khvt_adminthememanager_application_controller_admin_adminlist_item"}]
                     [{cycle values="listitem,listitem2" assign="cssClass"}]
-                    [{if $adminTheme->getInfo('id') == $oxid}]
+                    [{if $selectedAdminThemeId == $adminTheme->getInfo('id')}]
                         [{assign var="cssClass" value="listitem4"}]
                     [{/if}]
                     <td valign="top" class="[{$cssClass}][{if $adminTheme->getInfo('active')}] active[{/if}]" height="15">

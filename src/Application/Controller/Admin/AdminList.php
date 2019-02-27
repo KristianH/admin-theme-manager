@@ -13,9 +13,17 @@ class AdminList extends \OxidEsales\Eshop\Application\Controller\Admin\AdminList
      */
     public function render()
     {
-        $return = parent::render();
+        $return        = parent::render();
+        $activethemeID = $this->getAdminTheme()->getActiveThemeId();
 
         $this->addTplParam('adminThemeList', $this->getAdminThemeList());
+        $this->addTplParam('oxid', $activethemeID);
+        $editid = $this->getEditObjectId();
+        if (empty($editid)) {
+            $this->setEditObjectId($activethemeID);
+            $this->addTplParam("updatelist", 0);
+        }
+        $this->addTplParam('selectedAdminThemeId', $this->getEditObjectId());
 
         return $return;
     }
