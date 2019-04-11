@@ -16,8 +16,22 @@ class NavigationTree extends NavigationTree_parent
         /** @var \KHVT\AdminThemeManager\Core\Config $config */
         $config     = $this->getConfig();
         $viewsPath  = $config->getViewsDir(true);
-        $adminTheme = $config->getAdminThemeManagerSelectedTheme();
+        $adminTheme = $config->getShopConfVar('sAdminTheme');
 
+        $fullAdminDir = $viewsPath . $adminTheme . DIRECTORY_SEPARATOR;
+        $menuFile = $fullAdminDir . 'menu.xml';
+
+        // including std file
+        if (file_exists($menuFile)) {
+            $filesToLoad[] = $menuFile;
+        }
+
+        // including custom file
+        if (file_exists($fullAdminDir . 'user.xml')) {
+            $filesToLoad[] = $fullAdminDir . 'user.xml';
+        }
+
+        $adminTheme = $config->getShopConfVar('sAdminCustomTheme');
         $fullAdminDir = $viewsPath . $adminTheme . DIRECTORY_SEPARATOR;
         $menuFile = $fullAdminDir . 'menu.xml';
 

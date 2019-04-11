@@ -17,15 +17,12 @@ class Main extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsCo
     {
         $return       = parent::render();
         $adminTheme   = $this->getLoadedAdminTheme();
-        $adminThemeId = $adminTheme->getActiveThemeId();
+        $adminThemeId = $adminTheme->getId();
         $this->addTplParam('currentAdminTheme', $adminTheme);
         $this->addTplParam('oxid', $adminThemeId);
 
         $this->addTplParam('sHelpURL', "");
-        //        /** @var ClassProviderStorage $classProviderStorage */
-        //        $classProviderStorage = oxNew(ClassProviderStorage::class);
-        //        $classStorage = $classProviderStorage ->get();
-        //        dumpvar(array_flip($classStorage['admin-theme-manager']));
+
         return $return;
     }
 
@@ -37,11 +34,6 @@ class Main extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsCo
         /** @var AdminTheme $adminTheme */
         $adminTheme =  oxNew(AdminTheme::class);
         $currentAdminThemeId = $this->getEditObjectId();
-        if (empty($currentAdminThemeId)) {
-            $currentAdminThemeId = $adminTheme->getActiveThemeId();
-            $this->setEditObjectId($currentAdminThemeId);
-            $this->addTplParam("updatelist", 0);
-        }
 
         if(false == $adminTheme->load($currentAdminThemeId)) {
             $message = Registry::getLang()->translateString('KHVT_EXCEPTION_ADMINTHEME_NOT_LOADED');

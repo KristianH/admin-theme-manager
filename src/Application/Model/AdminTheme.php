@@ -202,4 +202,18 @@ class AdminTheme extends \OxidEsales\Eshop\Core\Theme
         $this->getConfig()->saveShopConfVar("str", 'sAdminCustomTheme', $adminCustomTheme);
 
     }
+
+    public function getParent()
+    {
+        $sParent = $this->getInfo('parentTheme');
+        if (!$sParent) {
+            return null;
+        }
+        $oTheme = oxNew(self::class);
+        if ($oTheme->load($sParent)) {
+            return $oTheme;
+        }
+
+        return null;
+    }
 }

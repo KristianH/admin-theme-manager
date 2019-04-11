@@ -8,7 +8,7 @@ class Language extends Language_parent
     {
         $oConfig = $this->getConfig();
         $aLangFiles = [];
-        $sTheme = $this->getAdminThemeManagerSelectedTheme();
+        $sTheme = $oConfig->getConfigParam("sAdminTheme");
         $sAppDir = $oConfig->getAppDir();
         $sLang = \OxidEsales\Eshop\Core\Registry::getLang()->getLanguageAbbr($iLang);
 
@@ -22,6 +22,8 @@ class Language extends Language_parent
         $aLangFiles[] = $sAppDir . 'translations/' . $sLang . '/translit_lang.php';
         $aLangFiles = $this->_appendLangFile($aLangFiles, $sAdminPath);
 
+        $aLangFiles = array_merge($aLangFiles, $this->getAdminCustomThemeLanguageFiles($iLang));
+
         // themes options lang files
         $sThemePath = $sAppDir . 'views/*/' . $sLang;
         $aLangFiles = $this->_appendLangFile($aLangFiles, $sThemePath, "options");
@@ -33,6 +35,30 @@ class Language extends Language_parent
         $aLangFiles = $this->_appendCustomLangFiles($aLangFiles, $sLang, true);
 
         return count($aLangFiles) ? $aLangFiles : false;
+    }
+
+    /**
+     * Returns custom theme language files.
+     *
+     * @param int $language active language
+     *
+     * @return array
+     */
+    protected function getAdminCustomThemeLanguageFiles($language)
+    {
+        $oConfig = $this->getConfig();
+        $sCustomTheme = $oConfig->getConfigParam("sAdminCustomTheme");
+        $sAppDir = $oConfig->getAppDir();
+        $sLang = \OxidEsales\Eshop\Core\Registry::getLang()->getLanguageAbbr($language);
+        $aLangFiles = [];
+
+        if ($sCustomTheme) {
+            $sCustPath = $sAppDir . 'views/' . $sCustomTheme . '/' . $sLang;
+            $aLangFiles[] = $sCustPath . "/lang.php";
+            $aLangFiles = $this->_appendLangFile($aLangFiles, $sCustPath);
+        }
+
+        return $aLangFiles;
     }
 
     /**
@@ -50,22 +76,22 @@ class Language extends Language_parent
             /** @var Config $oConfig */
             $oConfig      = $this->getConfig();
             $sAppDir      = $oConfig->getAppDir();
-            $sTheme       = $this->getAdminThemeManagerSelectedTheme();
+            $sTheme = $oConfig->getConfigParam("sAdminTheme");
+            $sCustomTheme = $oConfig->getConfigParam("sAdminCustomTheme");
 
-            $aLangFiles[] = $sAppDir.'views/'.$sTheme.'/'.$sLang.'/cust_lang.php';
+            if ($sTheme) {
+                $aLangFiles[] = $sAppDir . 'views/' . $sTheme . '/' . $sLang . '/cust_lang.php';
+            }
+
+            if ($sCustomTheme) {
+                $aLangFiles[] = $sAppDir . 'views/' . $sCustomTheme . '/' . $sLang . '/cust_lang.php';
+            }
 
             return $aLangFiles;
         }
 
 
         return parent::_appendCustomLangFiles($aLangFiles, $sLang, $blForAdmin);
-    }
-
-    public function getAdminThemeManagerSelectedTheme()
-    {
-        /** @var Config $oConfig */
-        $oConfig      = $this->getConfig();
-        return $oConfig->getAdminThemeManagerSelectedTheme();
     }
 
     /**
@@ -77,7 +103,7 @@ class Language extends Language_parent
     {
         if ($this->_aAdminTplLanguageArray === null) {
             $myConfig = $this->getConfig();
-            $sTheme   = $this->getAdminThemeManagerSelectedTheme();
+            $sTheme = $myConfig->getConfigParam("sAdminTheme");
 
             $aLangArray = $this->getLanguageArray();
             $this->_aAdminTplLanguageArray = [];
@@ -87,6 +113,17 @@ class Language extends Language_parent
                 $sFilePath = "{$sSourceDir}{$oLang->abbr}/lang.php";
                 if (file_exists($sFilePath) && is_readable($sFilePath)) {
                     $this->_aAdminTplLanguageArray[$iLangKey] = $oLang;
+                }
+            }
+
+            $sCustomTheme = $myConfig->getConfigParam("sAdminCustomTheme");
+            if($sCustomTheme) {
+                $sSourceDir = $myConfig->getAppDir() . 'views/' . $sCustomTheme . '/';
+                foreach ($aLangArray as $iLangKey => $oLang) {
+                    $sFilePath = "{$sSourceDir}{$oLang->abbr}/lang.php";
+                    if (file_exists($sFilePath) && is_readable($sFilePath)) {
+                        $this->_aAdminTplLanguageArray[$iLangKey] = $oLang;
+                    }
                 }
             }
         }

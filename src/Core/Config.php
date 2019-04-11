@@ -31,14 +31,8 @@ class Config extends Config_parent
 
     public function getAdminThemeManagerDir($file, $dir, $admin, $lang = null, $shop = null, $theme = null, $absolute = true, $ignoreCust = false)
     {
-        //<editor-fold desc="TODO: check if this part is necessary">
         if (is_null($theme)) {
-            $theme = $this->getConfigParam('sTheme');
-        }
-        //</editor-fold>
-
-        if ($admin) {
-            $theme = $this->getAdminThemeManagerSelectedTheme();
+            $theme = $this->getConfigParam('sAdminTheme');
         }
 
         if ($dir != $this->_sTemplateDir) {
@@ -77,18 +71,18 @@ class Config extends Config_parent
 
         //<editor-fold desc="TODO: check if this part is necessary">
         // Check for custom template
-        $customTheme = $this->getConfigParam('sCustomTheme');
-        if (!$return && !$admin && !$ignoreCust && $customTheme && $customTheme != $theme) {
-            $return = $this->getDir($file, $dir, $admin, $lang, $shop, $customTheme, $absolute);
+        $customTheme = $this->getConfigParam('sAdminCustomTheme');
+        if (!$return && !$ignoreCust && $customTheme && $customTheme != $theme) {
+            $return = $this->getAdminThemeManagerDir($file, $dir, $admin, $lang, $shop, $customTheme, $absolute);
         }
 
         //test lang level ..
-        if (!$return && !$admin && is_readable($absBase . $path)) {
+        if (!$return && is_readable($absBase . $path)) {
             $return = $base . $path;
         }
 
         //test shop level ..
-        if (!$return && !$admin) {
+        if (!$return) {
             $return = $this->getShopLevelDir($base, $absBase, $file, $dir, $admin, $lang, $shop, $theme, $absolute, $ignoreCust);
         }
         //</editor-fold>

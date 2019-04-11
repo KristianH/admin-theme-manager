@@ -1,7 +1,5 @@
 [{include file="headitem.tpl" title="GENERAL_ADMIN_TITLE"|oxmultilangassign box="box"}]
 
-[{oxscript add=$updateNaviScript priority=10}]
-
 <form name="transfer" id="transfer" action="[{$oViewConf->getSelfLink()}]" method="post">
     [{$oViewConf->getHiddenSid()}]
     <input type="hidden" name="oxid" value="[{$currentAdminTheme->getInfo('id')}]">
@@ -28,6 +26,17 @@
             <td valign="top">
                 <h1>[{$currentAdminTheme->getInfo('title')}]</h1>
                 <p>[{$currentAdminTheme->getInfo('description')}]</p>
+                [{if $currentAdminTheme->getInfo('parentTheme')}]
+                    <strong>[{oxmultilang ident="THEME_PARENT_THEME_TITLE"}]: </strong>
+                    [{assign var='parentAdminTheme' value=$currentAdminTheme->getParent()}]
+                    [{if $parentAdminTheme}]
+                        <a class="themetitle" href="[{$oViewConf->getSelfLink()}]&amp;cl=[{$oViewConf->getActiveClassname()}]&amp;oxid=[{$currentAdminTheme->getInfo('parentTheme')}]&amp;updatelist=1">[{$parentAdminTheme->getInfo('title')}]</a>
+                    [{else}]
+                        <span class="error">[{$currentAdminTheme->getInfo('parentTheme')}]</span>
+                    [{/if}]
+                    <br>
+                    <strong>[{oxmultilang ident="THEME_PARENT_VERSIONS"}]: </strong> [{', '|implode:$currentAdminTheme->getInfo('parentVersions')}]
+                [{/if}]
                 <hr>
                 <p style="color:#aaa;">
                     <b>[{oxmultilang ident="KHVT_ATM_THEME_AUTHOR"}]</b> [{$currentAdminTheme->getInfo('author')}]<br><br>
