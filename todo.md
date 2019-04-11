@@ -4,6 +4,6 @@
 - [x] add backend area /Extensions/Admin Themes/
 - [x] add theme listing
 - [x] add theme editing
-- [ ] add theme validations
 - [x] add parent/child handling
+- [ ] add theme validations
 - [ ] add settings handling
