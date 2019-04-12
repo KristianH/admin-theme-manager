@@ -2,6 +2,14 @@
 /**
  * Metadata version
  */
+
+use KHVT\AdminThemeManager\Application\Controller\Admin\AdminList;
+use KHVT\AdminThemeManager\Application\Controller\Admin\Base;
+use KHVT\AdminThemeManager\Application\Controller\Admin\Main;
+use KHVT\AdminThemeManager\Application\Controller\Admin\NavigationTree;
+use KHVT\AdminThemeManager\Application\Controller\Admin\Settings;
+use KHVT\AdminThemeManager\Core\Config;
+
 $sMetadataVersion = '2.0';
 
 /**
@@ -20,15 +28,15 @@ $aModule = array(
     'url'         => 'https://github.com/KristianH/admin-theme-manager/',
     'email'       => '',
     'extend'      => array(
-        \OxidEsales\Eshop\Core\Config::class                                 => \KHVT\AdminThemeManager\Core\Config::class,
+        \OxidEsales\Eshop\Core\Config::class                                 => Config::class,
         \OxidEsales\Eshop\Core\Language::class                               => \KHVT\AdminThemeManager\Core\Language::class,
-        \OxidEsales\Eshop\Application\Controller\Admin\NavigationTree::class => \KHVT\AdminThemeManager\Application\Controller\Admin\NavigationTree::class,
+        \OxidEsales\Eshop\Application\Controller\Admin\NavigationTree::class => NavigationTree::class,
     ),
     'controllers' => array(
-        'khvt_adminthememanager_application_controller_admin_adminlist' => \KHVT\AdminThemeManager\Application\Controller\Admin\AdminList::class,
-        'khvt_adminthememanager_application_controller_admin_base'      => \KHVT\AdminThemeManager\Application\Controller\Admin\Base::class,
-        'khvt_adminthememanager_application_controller_admin_main'      => \KHVT\AdminThemeManager\Application\Controller\Admin\Main::class,
-        'khvt_adminthememanager_application_controller_admin_settings'  => \KHVT\AdminThemeManager\Application\Controller\Admin\Settings::class,
+        'khvt_adminthememanager_application_controller_admin_adminlist' => AdminList::class,
+        'khvt_adminthememanager_application_controller_admin_base'      => Base::class,
+        'khvt_adminthememanager_application_controller_admin_main'      => Main::class,
+        'khvt_adminthememanager_application_controller_admin_settings'  => Settings::class,
     ),
     'templates'   => array(
         'khvt_adminthememanager_application_views_admin_tpl_adminlist.tpl' => 'khvt/AdminThemeManager/Application/views/admin/tpl/adminlist.tpl',

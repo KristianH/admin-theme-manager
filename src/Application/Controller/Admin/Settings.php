@@ -4,9 +4,12 @@ namespace KHVT\AdminThemeManager\Application\Controller\Admin;
 
 use KHVT\AdminThemeManager\Application\Model\AdminTheme;
 use OxidEsales\Eshop\Application\Controller\Admin\AdminController;
+use OxidEsales\Eshop\Application\Controller\Admin\ShopConfiguration;
+use OxidEsales\Eshop\Core\Config;
+use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Registry;
 
-class Settings extends \OxidEsales\Eshop\Application\Controller\Admin\ShopConfiguration
+class Settings extends ShopConfiguration
 {
 
     protected $_sThisTemplate = "khvt_adminthememanager_application_views_admin_tpl_settings.tpl";
@@ -27,14 +30,17 @@ class Settings extends \OxidEsales\Eshop\Application\Controller\Admin\ShopConfig
 
         try {
             $aDbVariables = $this->loadConfVars($this->getConfig()->getShopId(), $this->_getModuleForConfigVars());
-            $this->addTplParam("var_constraints" , $aDbVariables['constraints']);
-            $this->addTplParam("var_grouping" , $aDbVariables['grouping']);
+            $this->addTplParam("var_constraints", $aDbVariables['constraints']);
+            $this->addTplParam("var_grouping", $aDbVariables['grouping']);
             foreach ($this->_aConfParams as $sType => $sParam) {
                 $this->addTplParam($sParam, $aDbVariables['vars'][$sType]);
             }
-        } catch (\OxidEsales\Eshop\Core\Exception\StandardException $oEx) {
-            \OxidEsales\Eshop\Core\Registry::getUtilsView()->addErrorToDisplay($oEx);
-            $oEx->debugOut();
+        } catch (StandardException $oEx) {
+            Registry::getUtilsView()->addErrorToDisplay($oEx);
+            Registry::getLogger()->error(
+                $oEx->getMessage(),
+                [$oEx]
+            );
         }
 
         return $return;
@@ -51,7 +57,7 @@ class Settings extends \OxidEsales\Eshop\Application\Controller\Admin\ShopConfig
             $this->currentAdminThemeID = $this->getEditObjectId();
         }
 
-        return \OxidEsales\Eshop\Core\Config::OXMODULE_THEME_PREFIX.$this->currentAdminThemeID;
+        return Config::OXMODULE_THEME_PREFIX.$this->currentAdminThemeID;
     }
 
     /**
@@ -60,7 +66,7 @@ class Settings extends \OxidEsales\Eshop\Application\Controller\Admin\ShopConfig
     public function saveConfVars()
     {
         $myConfig = $this->getConfig();
-
+        $request = Registry::getRequest();
         AdminController::save();
 
         $sShopId = $myConfig->getShopId();
@@ -68,7 +74,7 @@ class Settings extends \OxidEsales\Eshop\Application\Controller\Admin\ShopConfig
         $sModule = $this->_getModuleForConfigVars();
 
         foreach ($this->_aConfParams as $sType => $sParam) {
-            $aConfVars = $myConfig->getRequestParameter($sParam);
+            $aConfVars = $request->getRequestParameter($sParam);
             if (is_array($aConfVars)) {
                 foreach ($aConfVars as $sName => $sValue) {
                     $myConfig->saveShopConfVar(
@@ -97,7 +103,7 @@ class Settings extends \OxidEsales\Eshop\Application\Controller\Admin\ShopConfig
             $message .= Registry::getLang()->translateString('COLON');
             $message .= " $currentAdminThemeId";
             Registry::getUtilsView()->addErrorToDisplay(
-                oxNew(\OxidEsales\Eshop\Core\Exception\StandardException::class, $message)
+                oxNew(StandardException::class, $message)
             );
         }
 

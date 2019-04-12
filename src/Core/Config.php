@@ -1,4 +1,5 @@
 <?php
+
 namespace KHVT\AdminThemeManager\Core;
 
 use KHVT\AdminThemeManager\Application\Model\AdminTheme;
@@ -36,10 +37,10 @@ class Config extends Config_parent
         }
 
         if ($dir != $this->_sTemplateDir) {
-            $base = $this->getOutDir($absolute);
+            $base    = $this->getOutDir($absolute);
             $absBase = $this->getOutDir();
         } else {
-            $base = $this->getViewsDir($absolute);
+            $base    = $this->getViewsDir($absolute);
             $absBase = $this->getViewsDir();
         }
 
@@ -60,8 +61,8 @@ class Config extends Config_parent
         }
 
         //Load from
-        $path = "{$theme}/{$shop}/{$langAbbr}/{$dir}/{$file}";
-        $cacheKey = $path . "_{$ignoreCust}{$absolute}";
+        $path     = "{$theme}/{$shop}/{$langAbbr}/{$dir}/{$file}";
+        $cacheKey = $path."_{$ignoreCust}{$absolute}";
 
         if (($return = Registry::getUtils()->fromStaticCache($cacheKey)) !== null) {
             return $return;
@@ -77,38 +78,49 @@ class Config extends Config_parent
         }
 
         //test lang level ..
-        if (!$return && is_readable($absBase . $path)) {
-            $return = $base . $path;
+        if (!$return && is_readable($absBase.$path)) {
+            $return = $base.$path;
         }
 
         //test shop level ..
         if (!$return) {
-            $return = $this->getShopLevelDir($base, $absBase, $file, $dir, $admin, $lang, $shop, $theme, $absolute, $ignoreCust);
+            $return = $this->getShopLevelDir(
+                $base,
+                $absBase,
+                $file,
+                $dir,
+                $admin,
+                $lang,
+                $shop,
+                $theme,
+                $absolute,
+                $ignoreCust
+            );
         }
         //</editor-fold>
 
         //test theme language level ..
         $path = "$theme/$langAbbr/$dir/$file";
-        if (!$return && $lang !== false && is_readable($absBase . $path)) {
-            $return = $base . $path;
+        if (!$return && $lang !== false && is_readable($absBase.$path)) {
+            $return = $base.$path;
         }
 
         //test theme level ..
         $path = "$theme/$dir/$file";
-        if (!$return && is_readable($absBase . $path)) {
-            $return = $base . $path;
+        if (!$return && is_readable($absBase.$path)) {
+            $return = $base.$path;
         }
 
         //test out language level ..
         $path = "$langAbbr/$dir/$file";
-        if (!$return && $lang !== false && is_readable($absBase . $path)) {
-            $return = $base . $path;
+        if (!$return && $lang !== false && is_readable($absBase.$path)) {
+            $return = $base.$path;
         }
 
         //test out level ..
         $path = "$dir/$file";
-        if (!$return && is_readable($absBase . $path)) {
-            $return = $base . $path;
+        if (!$return && is_readable($absBase.$path)) {
+            $return = $base.$path;
         }
 
         // TODO: implement logic to log missing paths

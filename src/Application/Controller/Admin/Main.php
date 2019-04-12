@@ -1,16 +1,19 @@
 <?php
+
 namespace KHVT\AdminThemeManager\Application\Controller\Admin;
 
 use KHVT\AdminThemeManager\Application\Model\AdminTheme;
+use OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsController;
+use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Module\ModuleVariablesLocator;
 use OxidEsales\Eshop\Core\Registry;
 
-class Main extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsController
+class Main extends AdminDetailsController
 {
 
     protected $_sThisTemplate = "khvt_adminthememanager_application_views_admin_tpl_main.tpl";
+
     /**
-     *
      * @return string
      */
     public function render()
@@ -32,15 +35,15 @@ class Main extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsCo
     protected function getLoadedAdminTheme()
     {
         /** @var AdminTheme $adminTheme */
-        $adminTheme =  oxNew(AdminTheme::class);
+        $adminTheme          = oxNew(AdminTheme::class);
         $currentAdminThemeId = $this->getEditObjectId();
 
-        if(false == $adminTheme->load($currentAdminThemeId)) {
+        if (false == $adminTheme->load($currentAdminThemeId)) {
             $message = Registry::getLang()->translateString('KHVT_EXCEPTION_ADMINTHEME_NOT_LOADED');
             $message .= Registry::getLang()->translateString('COLON');
             $message .= " $currentAdminThemeId";
             Registry::getUtilsView()->addErrorToDisplay(
-                oxNew(\OxidEsales\Eshop\Core\Exception\StandardException::class, $message)
+                oxNew(StandardException::class, $message)
             );
         }
 
@@ -48,7 +51,7 @@ class Main extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsCo
     }
 
     /**
-     * @throws \OxidEsales\Eshop\Core\Exception\StandardException
+     * @throws StandardException
      */
     public function setAdminTheme()
     {

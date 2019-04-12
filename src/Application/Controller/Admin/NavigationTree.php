@@ -2,24 +2,26 @@
 
 namespace KHVT\AdminThemeManager\Application\Controller\Admin;
 
+use KHVT\AdminThemeManager\Core\Config;
+use OxidEsales\Eshop\Core\Module\ModuleList;
 
 class NavigationTree extends NavigationTree_parent
 {
     /**
-     * Returns array witn pathes + names ox manu xml files. Paths are checked
+     * Returns array with paths + names ox menu xml files. Paths are checked
      *
      * @return array
      */
     protected function _getMenuFiles()
     {
         $filesToLoad = [];
-        /** @var \KHVT\AdminThemeManager\Core\Config $config */
+        /** @var Config $config */
         $config     = $this->getConfig();
         $viewsPath  = $config->getViewsDir(true);
         $adminTheme = $config->getShopConfVar('sAdminTheme');
 
-        $fullAdminDir = $viewsPath . $adminTheme . DIRECTORY_SEPARATOR;
-        $menuFile = $fullAdminDir . 'menu.xml';
+        $fullAdminDir = $viewsPath.$adminTheme.DIRECTORY_SEPARATOR;
+        $menuFile     = $fullAdminDir.'menu.xml';
 
         // including std file
         if (file_exists($menuFile)) {
@@ -27,13 +29,13 @@ class NavigationTree extends NavigationTree_parent
         }
 
         // including custom file
-        if (file_exists($fullAdminDir . 'user.xml')) {
-            $filesToLoad[] = $fullAdminDir . 'user.xml';
+        if (file_exists($fullAdminDir.'user.xml')) {
+            $filesToLoad[] = $fullAdminDir.'user.xml';
         }
 
-        $adminTheme = $config->getShopConfVar('sAdminCustomTheme');
-        $fullAdminDir = $viewsPath . $adminTheme . DIRECTORY_SEPARATOR;
-        $menuFile = $fullAdminDir . 'menu.xml';
+        $adminTheme   = $config->getShopConfVar('sAdminCustomTheme');
+        $fullAdminDir = $viewsPath.$adminTheme.DIRECTORY_SEPARATOR;
+        $menuFile     = $fullAdminDir.'menu.xml';
 
         // including std file
         if (file_exists($menuFile)) {
@@ -41,21 +43,21 @@ class NavigationTree extends NavigationTree_parent
         }
 
         // including custom file
-        if (file_exists($fullAdminDir . 'user.xml')) {
-            $filesToLoad[] = $fullAdminDir . 'user.xml';
+        if (file_exists($fullAdminDir.'user.xml')) {
+            $filesToLoad[] = $fullAdminDir.'user.xml';
         }
 
         // including module menu files
-        $path = getShopBasePath();
-        $modulelist = oxNew(\OxidEsales\Eshop\Core\Module\ModuleList::class);
-        $activeModuleInfo = $modulelist->getActiveModuleInfo();
+        $path             = getShopBasePath();
+        $moduleList       = oxNew(ModuleList::class);
+        $activeModuleInfo = $moduleList->getActiveModuleInfo();
         if (is_array($activeModuleInfo)) {
             foreach ($activeModuleInfo as $modulePath) {
-                $fullPath = $path . "modules/" . $modulePath;
+                $fullPath = $path."modules/".$modulePath;
                 // missing file/folder?
                 if (is_dir($fullPath)) {
                     // including menu file
-                    $menuFile = $fullPath . "/menu.xml";
+                    $menuFile = $fullPath."/menu.xml";
                     if (file_exists($menuFile) && is_readable($menuFile)) {
                         $filesToLoad[] = $menuFile;
                     }
@@ -64,7 +66,7 @@ class NavigationTree extends NavigationTree_parent
         }
 
         $parentFilesToLoad = parent::_getMenuFiles();
-        $filesToLoad = array_merge($filesToLoad, $parentFilesToLoad);
+        $filesToLoad       = array_merge($filesToLoad, $parentFilesToLoad);
 
         return $filesToLoad;
     }

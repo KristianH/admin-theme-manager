@@ -8,20 +8,22 @@
 </form>
 
 [{block name="khvt_adminthememanager_application_controller_admin_main_form"}]
-    <table cellspacing="10" width="98%">
-            [{if $activationMessage}]
-                <tr>
-                    <td colspan="2">
-                        <div class="messagebox">
-                            <p class="warning">[{oxmultilang ident=$activationMessage}]</p>
-                        </div>
-                    </td>
-                    <td></td>
-                </tr>
-            [{/if}]
+    <table width="98%">
+        [{if $activationMessage}]
+            <tr>
+                <td colspan="2">
+                    <div class="messagebox">
+                        <p class="warning">[{oxmultilang ident=$activationMessage}]</p>
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+        [{/if}]
         <tr>
             <td width="30%" valign="top">
-                <img src="[{$currentAdminTheme->getThumbnailUrl()}]" style="max-width: 100%;" alt="[{oxmultilang ident="KHVT_ATM_THEME_MISSING_THUMBNAIL"}]">
+                <img src="[{$currentAdminTheme->getThumbnailUrl()}]"
+                     style="max-width: 100%;"
+                     alt="[{oxmultilang ident="KHVT_ATM_THEME_MISSING_THUMBNAIL"}]">
             </td>
             <td valign="top">
                 <h1>[{$currentAdminTheme->getInfo('title')}]</h1>
@@ -30,16 +32,19 @@
                     <strong>[{oxmultilang ident="THEME_PARENT_THEME_TITLE"}]: </strong>
                     [{assign var='parentAdminTheme' value=$currentAdminTheme->getParent()}]
                     [{if $parentAdminTheme}]
-                        <a class="themetitle" href="[{$oViewConf->getSelfLink()}]&amp;cl=[{$oViewConf->getActiveClassname()}]&amp;oxid=[{$currentAdminTheme->getInfo('parentTheme')}]&amp;updatelist=1">[{$parentAdminTheme->getInfo('title')}]</a>
+                        <a class="themetitle"
+                           href="[{$oViewConf->getSelfLink()}]&amp;cl=[{$oViewConf->getActiveClassname()}]&amp;oxid=[{$currentAdminTheme->getInfo('parentTheme')}]&amp;updatelist=1">[{$parentAdminTheme->getInfo('title')}]</a>
                     [{else}]
                         <span class="error">[{$currentAdminTheme->getInfo('parentTheme')}]</span>
                     [{/if}]
                     <br>
-                    <strong>[{oxmultilang ident="THEME_PARENT_VERSIONS"}]: </strong> [{', '|implode:$currentAdminTheme->getInfo('parentVersions')}]
+                    <strong>[{oxmultilang ident="THEME_PARENT_VERSIONS"}]: </strong>
+                    [{', '|implode:$currentAdminTheme->getInfo('parentVersions')}]
                 [{/if}]
                 <hr>
                 <p style="color:#aaa;">
-                    <b>[{oxmultilang ident="KHVT_ATM_THEME_AUTHOR"}]</b> [{$currentAdminTheme->getInfo('author')}]<br><br>
+                    <b>[{oxmultilang ident="KHVT_ATM_THEME_AUTHOR"}]</b> [{$currentAdminTheme->getInfo('author')}]
+                    <br><br>
                     [{oxmultilang ident="KHVT_ATM_THEME_VERSION"}] [{$currentAdminTheme->getInfo('version')}]
                 </p>
             </td>
@@ -56,7 +61,10 @@
                         <input type="hidden" name="fnc" value="setAdminTheme">
                         <input type="hidden" name="updatelist" value="1">
                         <input type="hidden" name="oxid" value="[{$currentAdminTheme->getInfo('id')}]">
-                        <input type="submit" class="btn" value="[{oxmultilang ident="KHVT_ATM_THEME_ACTIVATE"}]"[{$disabledActivateButton}]>
+                        <input type="submit"
+                               class="btn"
+                               value="[{oxmultilang ident="KHVT_ATM_THEME_ACTIVATE"}]"
+                            [{$disabledActivateButton}]>
                         [{oxinputhelp ident="KHVT_ATM_THEME_ACTIVATE_HELP"}]
                     </p>
                 </form>
