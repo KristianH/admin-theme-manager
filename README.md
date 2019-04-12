@@ -13,7 +13,7 @@ The admin theme management base on shop theme management.
 - de/activate stand-alone admin themes
 - managing child themes
 
-## hot to install
+## how to install
 ```composer require khvt/admin-theme-manager```
 
 ## how to create a admin theme
