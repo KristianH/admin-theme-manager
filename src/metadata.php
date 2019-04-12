@@ -23,7 +23,7 @@ $aModule = array(
         'en' => '',
     ),
     'thumbnail'   => 'picture.png',
-    'version'     => '0.0.2',
+    'version'     => '1.0.0',
     'author'      => 'https://github.com/KristianH & https://github.com/vanilla-thunder/',
     'url'         => 'https://github.com/KristianH/admin-theme-manager/',
     'email'       => '',
