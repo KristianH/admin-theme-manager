@@ -5,5 +5,4 @@
 - [x] add theme listing
 - [x] add theme editing
 - [x] add parent/child handling
-- [ ] add theme validations
-- [ ] add settings handling
+- [x] add settings handling

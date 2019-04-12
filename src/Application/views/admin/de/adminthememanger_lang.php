@@ -5,6 +5,7 @@ $aLang = array(
     'charset'                                                  => 'UTF-8',
     'khvt_adminthememanager_application_controller_admin_base' => 'Admin-Themes',
     'khvt_adminthememanager_application_controller_admin_main' => 'Stamm',
+    'khvt_adminthememanager_application_controller_admin_settings' => 'Einstell.',
     'KHVT_ATM_THEME_AUTHOR'                                    => 'Autor',
     'KHVT_ATM_THEME_VERSION'                                   => 'Version',
     'KHVT_ATM_THEME_RESET_CACHE'                               => 'Cache leeren',

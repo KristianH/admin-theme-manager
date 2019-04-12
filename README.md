@@ -17,9 +17,9 @@ The admin theme management base on shop theme management.
 ```composer require khvt/admin-theme-manager```
 
 ## how to create a admin theme
-1. create a folder in source/Application/views/{themeId}/
-2. create a adminTheme.php file in source/Application/views/{themeId}/
-3. fill the adminTheme.php file with the theme parameters (not completed):
+1. create the theme folder in source/Application/views/{themeId}/
+2. create the configuration file in source/Application/views/{themeId}/adminTheme.php
+3. fill the adminTheme.php file with the theme parameters:
 ```
 <?php
 $themeParameter = [
@@ -31,7 +31,28 @@ $themeParameter = [
     'parentTheme' => 'admin',
     'author'      => '<a href="http://www.oxid-esales.com" title="OXID eSales AG">OXID eSales AG</a>',
     'parentVersions' => array('1'),
+    'settings'       => array(
+        array(
+            'group' => 'images',
+            'name'  => 'aDetailImageSizes',
+            'type'  => 'aarr',
+            'value' => array(
+                'oxpic1'  => '540*340',
+                'oxpic2'  => '540*340',
+                'oxpic3'  => '540*340',
+                'oxpic4'  => '540*340',
+                'oxpic5'  => '540*340',
+                'oxpic6'  => '540*340',
+                'oxpic7'  => '540*340',
+                'oxpic8'  => '540*340',
+                'oxpic9'  => '540*340',
+                'oxpic10' => '540*340',
+                'oxpic11' => '540*340',
+                'oxpic12' => '540*340',
+            ),
+        ),
+    ),
 ];
 ```
-4. create a folder in source/out/{themeId}/
-5. create your needed subfolders in source/Application/views/{themeId}/ (de, en, tpl, for example) and fill it with content :-)
+4. create the theme folder in source/out/{themeId}
+5. create your required subfolders in source/Application/views/{themeId}/ (de, en, tpl, for example) and fill it with content :-)
