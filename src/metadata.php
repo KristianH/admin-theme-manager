@@ -9,6 +9,7 @@ use KHVT\AdminThemeManager\Application\Controller\Admin\Main;
 use KHVT\AdminThemeManager\Application\Controller\Admin\NavigationTree;
 use KHVT\AdminThemeManager\Application\Controller\Admin\Settings;
 use KHVT\AdminThemeManager\Core\Config;
+use KHVT\AdminThemeManager\Core\Setup;
 
 $sMetadataVersion = '2.0';
 
@@ -44,7 +45,9 @@ $aModule = array(
         'khvt_adminthememanager_application_views_admin_tpl_main.tpl'      => 'khvt/AdminThemeManager/Application/views/admin/tpl/main.tpl',
         'khvt_adminthememanager_application_views_admin_tpl_settings.tpl'  => 'khvt/AdminThemeManager/Application/views/admin/tpl/settings.tpl',
     ),
-    'events'      => array(),
+    'events'      => array(
+        'onActivate'   => Setup::class.'::install',
+    ),
     'blocks'      => array(),
     'settings'    => array(),
 );
