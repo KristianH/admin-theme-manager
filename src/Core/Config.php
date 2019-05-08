@@ -5,6 +5,11 @@ namespace KHVT\AdminThemeManager\Core;
 use KHVT\AdminThemeManager\Application\Model\AdminTheme;
 use OxidEsales\Eshop\Core\Registry;
 
+/**
+ * Class Config
+ *
+ * @package KHVT\AdminThemeManager\Core
+ */
 class Config extends Config_parent
 {
     /**
@@ -30,6 +35,18 @@ class Config extends Config_parent
         return parent::getDir($file, $dir, $admin, $lang, $shop, $theme, $absolute, $ignoreCust);
     }
 
+    /**
+     * @param      $file
+     * @param      $dir
+     * @param      $admin
+     * @param null $lang
+     * @param null $shop
+     * @param null $theme
+     * @param bool $absolute
+     * @param bool $ignoreCust
+     *
+     * @return bool|false|mixed|string
+     */
     public function getAdminThemeManagerDir($file, $dir, $admin, $lang = null, $shop = null, $theme = null, $absolute = true, $ignoreCust = false)
     {
         if (is_null($theme)) {
@@ -131,6 +148,9 @@ class Config extends Config_parent
         return $return;
     }
 
+    /**
+     * @return string
+     */
     public function getAdminThemeManagerSelectedTheme()
     {
         /** @var AdminTheme $activeTheme */

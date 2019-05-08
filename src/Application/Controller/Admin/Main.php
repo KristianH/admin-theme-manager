@@ -8,9 +8,17 @@ use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Module\ModuleVariablesLocator;
 use OxidEsales\Eshop\Core\Registry;
 
+/**
+ * Class Main
+ *
+ * @package KHVT\AdminThemeManager\Application\Controller\Admin
+ */
 class Main extends AdminDetailsController
 {
 
+    /**
+     * @var string
+     */
     protected $_sThisTemplate = "khvt_adminthememanager_application_views_admin_tpl_main.tpl";
 
     /**

@@ -5,6 +5,11 @@ namespace KHVT\AdminThemeManager\Application\Controller\Admin;
 use KHVT\AdminThemeManager\Core\Config;
 use OxidEsales\Eshop\Core\Module\ModuleList;
 
+/**
+ * Class NavigationTree
+ *
+ * @package KHVT\AdminThemeManager\Application\Controller\Admin
+ */
 class NavigationTree extends NavigationTree_parent
 {
     /**

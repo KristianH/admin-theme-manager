@@ -9,12 +9,23 @@ use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Registry;
 
+/**
+ * Class Settings
+ *
+ * @package KHVT\AdminThemeManager\Application\Controller\Admin
+ */
 class Settings extends ShopConfiguration
 {
 
+    /**
+     * @var string
+     */
     protected $_sThisTemplate = "khvt_adminthememanager_application_views_admin_tpl_settings.tpl";
 
-    protected $currentAdminThemeID;
+    /**
+     * @var string
+     */
+    protected $currentAdminThemeID = "";
 
     /**
      * @return string
@@ -53,7 +64,7 @@ class Settings extends ShopConfiguration
      */
     protected function _getModuleForConfigVars()
     {
-        if ($this->currentAdminThemeID === null) {
+        if (empty($this->currentAdminThemeID)) {
             $this->currentAdminThemeID = $this->getEditObjectId();
         }
 

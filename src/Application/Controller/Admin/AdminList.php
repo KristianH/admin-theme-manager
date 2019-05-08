@@ -5,8 +5,16 @@ namespace KHVT\AdminThemeManager\Application\Controller\Admin;
 use KHVT\AdminThemeManager\Application\Model\AdminTheme;
 use OxidEsales\Eshop\Application\Controller\Admin\AdminListController;
 
+/**
+ * Class AdminList
+ *
+ * @package KHVT\AdminThemeManager\Application\Controller\Admin
+ */
 class AdminList extends AdminListController
 {
+    /**
+     * @var string
+     */
     protected $_sThisTemplate = "khvt_adminthememanager_application_views_admin_tpl_adminlist.tpl";
 
     /**
@@ -28,6 +36,9 @@ class AdminList extends AdminListController
         return $return;
     }
 
+    /**
+     * @return array
+     */
     public function getAdminThemeList()
     {
         $adminTheme = $this->getAdminTheme();

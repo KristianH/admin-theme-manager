@@ -4,8 +4,18 @@ namespace KHVT\AdminThemeManager\Core;
 
 use OxidEsales\Eshop\Core\Registry;
 
+/**
+ * Class Language
+ *
+ * @package KHVT\AdminThemeManager\Core
+ */
 class Language extends Language_parent
 {
+    /**
+     * @param int $iLang
+     *
+     * @return array|bool
+     */
     protected function _getAdminLangFilesPathArray($iLang)
     {
         $oConfig    = $this->getConfig();
@@ -111,6 +121,12 @@ class Language extends Language_parent
         return $this->_aAdminTplLanguageArray;
     }
 
+    /**
+     * @param int  $iLang
+     * @param null $blAdmin
+     *
+     * @return array
+     */
     protected function _getLanguageMap($iLang, $blAdmin = null)
     {
         $blAdmin = isset($blAdmin) ? $blAdmin : $this->isAdmin();
